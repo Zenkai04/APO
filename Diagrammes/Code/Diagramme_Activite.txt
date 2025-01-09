@@ -1,0 +1,33 @@
+@startuml
+|Joueur|
+start
+:Créer nouvelle partie;
+
+|Partie|
+:Initialiser solveur;
+:Initialiser générateur;
+:Initialiser grille courante;
+
+|Generateur|
+:Generer grille complète;
+:Enlever numéros;
+
+|Partie|
+:Mettre à jour grille courante;
+
+|Solveur|
+:Résoudre grille courante;
+
+:Utiliser règle de déduction;
+if (Non résolu) then (oui)
+  :Utiliser retour sur trace;
+endif
+
+if (Grille valide) then (oui)
+  :Mettre à jour statut à "Résolu";
+else (non)
+  :Mettre à jour statut à "Non résolu";
+endif
+
+stop
+@enduml

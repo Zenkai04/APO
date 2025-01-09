@@ -1,0 +1,64 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Grille {
+ -taille: int
+ -tabCellules: Cellule[]
+ +Grille(size: int)
+ ~initialiser()
+ ~afficher()
+ ~estValide()
+ ~estComplete()
+}
+
+class Cellule {
+ -valeur: int
+ -valeurPossible: int[]
+ +Cellule(value: int)
+ ~setValeur()
+ ~resetValeur()
+ ~getValeurPossible()
+}
+
+class Solveur {
+ -grille: Grille
+ +Solveur(grille: Grille)
+ ~utiliserRegleDeduction()
+ ~utiliserRetourSurTrace()
+ ~estResolvable()
+}
+
+class Generateur {
+ -grille: Grille
+ +Generateur(grille: Grille)
+ ~genererGrilleComplete()
+ ~enleverNumeros()
+ ~estSolutionUnique()
+}
+
+class Partie {
+ -solveur: Solveur
+ -generateur: Generateur
+ -grilleCourante: Grille
+ +Partie(solveur: Solveur, generateur: Generateur)
+ ~nouvellePartie()
+ ~resoudreGrilleCourante()
+ ~genererNouveauPuzzle()
+}
+
+class Joueur {
+ -nom: String
+ -partieEnCours: Partie
+ +Joueur(nom: String)
+ +creerNouvellePartie()
+ +resoudrePartie()
+}
+
+Grille "1" *-- "N" Cellule
+Solveur "1" *-- "1" Grille
+Generateur "1" *-- "1" Grille
+Partie "1" *-- "1" Solveur
+Partie "1" *-- "1" Generateur
+Partie "1" *-- "1" Grille
+Joueur "1" *-- "1" Partie
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+actor Joueur
+participant "Partie" as Partie
+participant "Generateur" as Generateur
+participant "Grille" as Grille
+participant "Solveur" as Solveur
+
+Joueur -> Partie : creerNouvellePartie()
+activate Partie
+
+Partie -> Generateur : genererGrilleComplete()
+activate Generateur
+Generateur -> Grille : creerGrille()
+deactivate Generateur
+
+Partie -> Solveur : resoudreGrilleCourante()
+activate Solveur
+Solveur -> Grille : resoudre()
+deactivate Solveur
+
+deactivate Partie
+@enduml

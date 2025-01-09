@@ -1,0 +1,44 @@
+@startuml
+object joueur {
+    -nom: J1
+    -partie: partie1
+}
+
+object partie {
+  -solveur: Solveur
+  -generateur: Generateur
+  -grilleCourante: Grille
+}
+
+object generateur {
+  -grille: Grille
+}
+
+object solveur {
+  -grille: Grille
+}
+
+object grille {
+  -taille: 9
+  -tabCellules: Cellule[]
+}
+
+object cellule1 {
+  -valeur: 5
+  -valeurPossible: [1,2,3,4,5,6,7,8,9]
+}
+
+object cellule2 {
+  -valeur: 3
+  -valeurPossible: [1,2,3,4,5,6,7,8,9]
+}
+
+joueur --> partie : crée
+partie --> grille : utilise
+grille --> cellule1 : contient
+grille --> cellule2 : contient
+partie --> generateur : utilise
+partie --> solveur : utilise
+generateur --> grille : génère
+solveur --> grille : résout
+@enduml
