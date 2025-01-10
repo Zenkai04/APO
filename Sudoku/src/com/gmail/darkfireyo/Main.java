@@ -1,6 +1,7 @@
 package com.gmail.darkfireyo;
 
 public class Main {
+<<<<<<< HEAD
 
     public static void main(String[] args){
         int taillex = 9;
@@ -25,6 +26,15 @@ public class Main {
             System.out.println(ligne.toString());
         }
 
+=======
+    public static void main(String[] args) {
+        Solver solver = new Solver();
+        Generator generator = new Generator();
+        Game game = new Game(solver, generator);
+        game.newGame();
+        game.solveCurrentGrid();
+        game.generateNewPuzzle();
+        game.solveCurrentGrid();
+>>>>>>> 491b5a9cff38986fc3aa589da228b4ef15605ac4
     }
-
 }

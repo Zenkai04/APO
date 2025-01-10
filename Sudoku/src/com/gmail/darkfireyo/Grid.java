@@ -24,43 +24,12 @@ public class Grid {
 		return gridArr[x + y * width];
 	}
 	
-	public void setElement(int x, int y,int value) {
-		gridArr[x + y * width] = value;
-	}
-
-	public int getWidth(){
-		return width;
-	}
-
-	public int getHeight(){
-		return height;
-	}
-
-	public boolean isValid(int x, int y, int value) {
-		for (int i = 0; i < width; i++) {
-			if (getElement(i, y) == value) {
-				return false;
-			}
-		}
-
-		for (int j = 0; j < height; j++) {
-			if (getElement(x, j) == value) {
-				return false;
-			}
-		}
-
-		int startX = (x / 3) * 3;
-		int startY = (y / 3) * 3;
-		for (int i = startX; i < startX + 3; i++) {
-			for (int j = startY; j < startY + 3; j++) {
-				if (getElement(i, j) == value) {
-					return false;
-				}
-			}
-		}
-
-		return true;
+	public void setElement(int x, int value) {
+		gridArr[x] = value;
 	}
 
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 491b5a9cff38986fc3aa589da228b4ef15605ac4
