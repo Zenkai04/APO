@@ -1,3 +1,5 @@
+package com.gmail.darkfireyo;
+
 public class Player {
     private String name;
     private Game currentGame;

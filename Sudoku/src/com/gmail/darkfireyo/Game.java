@@ -1,3 +1,5 @@
+package com.gmail.darkfireyo;
+
 public class Game {
     private Solver solver;
     private Generator generator;
