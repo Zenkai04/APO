@@ -24,8 +24,8 @@ public class Grid {
 		return gridArr[x + y * width];
 	}
 	
-	public int setElement(int x) {
-		 gridArr[x];
+	public void setElement(int x, int value) {
+		gridArr[x] = value;
 	}
 
 }

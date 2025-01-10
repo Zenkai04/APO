@@ -1,0 +1,31 @@
+@startuml
+skinparam state {
+  BackgroundColor<<Partie>> LightBlue
+  BackgroundColor<<Joueur>> LightGreen
+  BackgroundColor<<Solveur>> LightYellow
+  BackgroundColor<<Generateur>> LightSalmon
+}
+
+[*] --> Joueur : Démarrer
+Joueur --> Partie : créeNouvellePartie()
+Partie --> Generateur : genererNouveauPuzzle()
+Generateur --> Grille : genererGrilleComplete()
+Generateur --> Partie : enleverNumeros()
+Partie --> Joueur : nouvellePartie()
+
+Joueur --> Partie : resoudrePartie()
+Partie --> Solveur : resoudreGrilleCourante()
+Solveur --> Grille : utiliserRegleDeduction()
+Solveur --> Grille : utiliserRetourSurTrace()
+Grille --> Solveur : estResolvable()
+Solveur --> Partie : grilleRésolue
+Partie --> Joueur : partieRésolue()
+
+Joueur : nom
+Partie : grilleCourante
+Generateur : grille
+Solveur : grille
+Grille : tabCellules
+Cellule : valeur
+
+@enduml
