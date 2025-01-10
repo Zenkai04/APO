@@ -1,13 +1,13 @@
 package com.gmail.darkfireyo;
 
 public class Main {
-    public static void main(String[] args) {
-        Solver solver = new Solver();
-        Generator generator = new Generator();
-        Game game = new Game(solver, generator);
-        game.newGame();
-        game.solveCurrentGrid();
-        game.generateNewPuzzle();
-        game.solveCurrentGrid();
+
+    public static void main(String[] args){
+        Grid grille = new Grid(3,3);
+
+        Generator generateur = new Generator(grille);
+
+
     }
+
 }
