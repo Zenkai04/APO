@@ -1,4 +1,4 @@
-package com.gmail.darkfireyo;
+/* package com.gmail.darkfireyo;
 
 public class Player {
     private String name;
@@ -26,3 +26,4 @@ public class Player {
         return currentGame;
     }
 }
+*/
