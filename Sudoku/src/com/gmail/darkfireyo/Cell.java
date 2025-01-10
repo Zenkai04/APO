@@ -7,8 +7,8 @@ public class Cell {
         return val;
     }
 
-    public Cell(int val) {
-        this.val = val;
+    public Cell() {
+        this.val = 0;
     }
 
     void setVal(int val) {
