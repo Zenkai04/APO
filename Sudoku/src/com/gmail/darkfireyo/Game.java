@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import
+=======
+package com.gmail.darkfireyo;
+
+>>>>>>> 100691996ad518ea29acca4de40961f39a3a4516
 public class Game {
     private Solver solver;
     private Generator generator;
