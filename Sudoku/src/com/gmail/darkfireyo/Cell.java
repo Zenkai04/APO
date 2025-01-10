@@ -3,7 +3,7 @@ package com.gmail.darkfireyo;
 public class Cell {
     private int val;
 
-    public int getValeur() {
+    public int getVal() {
         return val;
     }
 
@@ -11,11 +11,11 @@ public class Cell {
         this.val = val;
     }
 
-    void setValeur(int val) {
+    void setVal(int val) {
         this.val = val;
     }
 
-    void resetValeur() {
+    void resetVal() {
         this.val = 0;
     }
 }

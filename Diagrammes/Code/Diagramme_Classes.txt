@@ -1,64 +1,62 @@
 @startuml
 skinparam classAttributeIconSize 0
 
-class Grille {
- -taille: int
- -tabCellules: Cellule[]
- +Grille(size: int)
- ~initialiser()
- ~afficher()
- ~estValide()
- ~estComplete()
+class Grid {
+ -gridArr: int[]
+ -width: int
+ -height: int
+ +Grid(width: int, height: int)
+ +getElement(x: int, y: int): int
+ +setElement(x: int, value: int)
 }
 
-class Cellule {
- -valeur: int
- -valeurPossible: int[]
- +Cellule(value: int)
- ~setValeur()
- ~resetValeur()
- ~getValeurPossible()
+class Cell {
+ -val: int
+ +Cell(val: int)
+ +getVal(): int
+ ~setVal(val: int)
+ ~resetVal()
 }
 
-class Solveur {
- -grille: Grille
- +Solveur(grille: Grille)
- ~utiliserRegleDeduction()
- ~utiliserRetourSurTrace()
- ~estResolvable()
+class Solver {
+ -grid: Grid
+ +Solver(grid: Grid)
+ ~useDeductionRule()
+ ~useBacktracking()
+ ~isSolvable()
 }
 
-class Generateur {
- -grille: Grille
- +Generateur(grille: Grille)
- ~genererGrilleComplete()
- ~enleverNumeros()
- ~estSolutionUnique()
+class Generator {
+ -grid: Grid
+ +Generator(grid: Grid)
+ ~generateCompleteGrid()
+ ~removeNumbers()
+ ~isUniqueSolution()
 }
 
-class Partie {
- -solveur: Solveur
- -generateur: Generateur
- -grilleCourante: Grille
- +Partie(solveur: Solveur, generateur: Generateur)
- ~nouvellePartie()
- ~resoudreGrilleCourante()
- ~genererNouveauPuzzle()
+class Game {
+ -solver: Solver
+ -generator: Generator
+ -currentGrid: Grid
+ +Game(solver: Solver, generator: Generator)
+ ~newGame()
+ ~solveCurrentGrid()
+ ~generateNewPuzzle()
 }
 
-class Joueur {
- -nom: String
- -partieEnCours: Partie
- +Joueur(nom: String)
- +creerNouvellePartie()
- +resoudrePartie()
+class Player {
+ -name: String
+ -currentGame: Game
+ +Player(name: String)
+ +createNewGame(solver: Solver, generator: Generator)
+ +solveGame()
 }
 
-Grille "1" *-- "N" Cellule
-Solveur "1" *-- "1" Grille
-Generateur "1" *-- "1" Grille
-Partie "1" *-- "1" Solveur
-Partie "1" *-- "1" Generateur
-Partie "1" *-- "1" Grille
-Joueur "1" *-- "1" Partie
+Grid "1" *-- "N" Cell
+Solver "1" *-- "1" Grid
+Generator "1" *-- "1" Grid
+Game "1" *-- "1" Solver
+Game "1" *-- "1" Generator
+Game "1" *-- "1" Grid
+Player "1" *-- "1" Game
 @enduml
