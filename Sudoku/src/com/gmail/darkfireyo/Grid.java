@@ -1,0 +1,31 @@
+package com.gmail.darkfireyo;
+
+public class Grid {
+	
+	private int[] gridArr;
+	
+	private int width;
+	
+	private int height;
+	
+	
+	public Grid(int width, int height) {
+		this.gridArr = new int[width * height];
+		
+		this.width = width;
+		this.height = height;
+	}
+	
+	public int getElement(int x, int y) {
+		if (x >= width || y >= height || x < 0 || y < 0) {
+			System.out.println("Bad Values");
+			System.exit(1);
+		}
+		return gridArr[x + y * width];
+	}
+	
+	public int setElement(int x) {
+		 gridArr[x];
+	}
+
+}
