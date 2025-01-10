@@ -10,6 +10,7 @@ public class Main {
         Generator generateur = new Generator(grille);
 
         boolean test = generateur.generateNumber();
+        generateur.deleteNumbers(5);
 
         for (int y = 0; y < taillex; y++) {
             StringBuilder ligne = new StringBuilder();
