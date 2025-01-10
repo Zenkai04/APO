@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 import
 =======
 package com.gmail.darkfireyo;
@@ -32,3 +32,4 @@ public class Game {
         return currentGrid;
     }
 }
+*/
