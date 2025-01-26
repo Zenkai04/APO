@@ -1,9 +1,4 @@
 
-/*<<<<<<<
-import
-=======
-=======
->>>>>>> 491b5a9cff38986fc3aa589da228b4ef15605ac4
 package com.gmail.darkfireyo;
 
 public class Game {
@@ -34,4 +29,3 @@ public class Game {
         return currentGrid;
     }
 }
-*/

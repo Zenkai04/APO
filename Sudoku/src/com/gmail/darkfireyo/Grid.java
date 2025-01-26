@@ -61,5 +61,37 @@ public class Grid {
 	public  int getWidth(){
 		return width;
 	}
+	
+	public Grid clone() {
+		Grid grid = new Grid(width,height);
+		grid.copy(this);
+		return grid;
+	}
 
+	public void copy(Grid grid) {
+		for(int i = 0; i < width; i ++) {
+			for(int j = 0 ; j < height; j++) {
+				gridArr[i + j * width] = grid.getElement(i, j);
+			}
+		}
+	}
+	
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+		for (int y = 0; y < width; y++) {
+	         StringBuilder ligne = new StringBuilder();
+	         for (int i = 0; i < height; i++) {
+	                ligne.append(this.getElement(i, y));
+
+	                if (i < height - 1) {
+	                    ligne.append(" ");
+	                }
+	            }
+
+	            result.append(ligne.toString());
+	            result.append(System.lineSeparator());
+	        }
+		return result.toString();
+	}
+	
 }

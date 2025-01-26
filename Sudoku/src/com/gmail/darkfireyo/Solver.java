@@ -1,13 +1,12 @@
 package com.gmail.darkfireyo;
 
 public class Solver {
-    private Grid grid;
     
-    public Solver(Grid grid) {
-        this.grid = grid;
+    public Solver() {
+     
     }
 
-    public void useDeductionRule(){
+    public void useDeductionRule(Grid grid){
         int length = grid.getWidth();
         for (int x = 0; x < length; x++) {
             int valTest = grid.getElement(x, 0);
@@ -19,4 +18,38 @@ public class Solver {
             }
         }
     }
+    
+public boolean isSolvable(Grid grid) {
+    	
+        return solve(grid.clone(), 0, 0);
+    }
+
+    private boolean solve(Grid grid, int x, int y) {
+        if (x == grid.getWidth()) {
+            x = 0;
+            y++;
+            if (y == grid.getHeight()) {
+                return true;
+            }
+        }
+
+        if (grid.getElement(x, y) != 0) {
+            return solve(grid, x + 1, y);
+        }
+
+        for (int num = 1; num <= 9; num++) {
+            if (grid.isValid(x, y, num)) {
+                grid.setElement(x, y, num);
+
+                if (solve(grid, x + 1, y)) {
+                    return true;
+                }
+
+                grid.setElement(x, y, 0);
+            }
+        }
+
+        return false;
+    }
+    
 }

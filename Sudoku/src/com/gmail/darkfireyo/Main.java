@@ -12,19 +12,7 @@ public class Main {
         boolean test = generateur.generateNumber();
         generateur.deleteNumbers(5);
 
-        for (int y = 0; y < taillex; y++) {
-            StringBuilder ligne = new StringBuilder();
-
-            for (int i = 0; i < tailley; i++) {
-                ligne.append(grille.getElement(i, y));
-
-                if (i < tailley - 1) {
-                    ligne.append(" ");
-                }
-            }
-
-            System.out.println(ligne.toString());
-        }
+        System.out.println(grille);
 
 
     }

@@ -4,9 +4,11 @@ import java.util.Random;
 
 public class Generator {
     private Grid currGrid;
+    private Solver solver;
 
     public Generator(Grid grid){
         this.currGrid = grid;
+        this.solver = new Solver();
     }
 
     public boolean generateNumber(){
@@ -60,7 +62,9 @@ public class Generator {
     public void deleteNumbers(int numberToDelete) {
         Random rand = new Random();
 
-        Grid tempGrid = new Grid(currGrid.getWidth(), currGrid.getHeight());
+        
+        Grid tempGrid = currGrid.clone();
+        
 
         for (int i = 0; i < numberToDelete; i++) {
             int x = rand.nextInt(currGrid.getWidth());
@@ -74,7 +78,7 @@ public class Generator {
 
             tempGrid.setElement(x, y, 0);
 
-            if (!isSolvable(tempGrid)) {
+            if (!solver.isSolvable(tempGrid)) {
 
                 tempGrid.setElement(x, y, currGrid.getElement(x, y));
                 i--;
@@ -82,38 +86,8 @@ public class Generator {
         }
 
 
-        currGrid = tempGrid;
+        currGrid.copy(tempGrid);
     }
-    private boolean isSolvable(Grid grid) {
-        return solve(grid, 0, 0);
-    }
-
-    private boolean solve(Grid grid, int x, int y) {
-        if (x == grid.getWidth()) {
-            x = 0;
-            y++;
-            if (y == grid.getHeight()) {
-                return true;
-            }
-        }
-
-        if (grid.getElement(x, y) != 0) {
-            return solve(grid, x + 1, y);
-        }
-
-        for (int num = 1; num <= 9; num++) {
-            if (grid.isValid(x, y, num)) {
-                grid.setElement(x, y, num);
-
-                if (solve(grid, x + 1, y)) {
-                    return true;
-                }
-
-                grid.setElement(x, y, 0);
-            }
-        }
-
-        return false;
-    }
+    
 
     }
