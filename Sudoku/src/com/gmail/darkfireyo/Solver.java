@@ -1,9 +1,8 @@
 package com.gmail.darkfireyo;
 
 public class Solver {
-    
+
     public Solver() {
-     
     }
 
     public void useDeductionRule(Grid grid){
@@ -18,9 +17,8 @@ public class Solver {
             }
         }
     }
-    
-public boolean isSolvable(Grid grid) {
-    	
+
+    public boolean isSolvable(Grid grid) {
         return solve(grid.clone(), 0, 0);
     }
 
@@ -37,7 +35,8 @@ public boolean isSolvable(Grid grid) {
             return solve(grid, x + 1, y);
         }
 
-        for (int num = 1; num <= 9; num++) {
+        int size = grid.getWidth();
+        for (int num = 1; num <= size; num++) {
             if (grid.isValid(x, y, num)) {
                 grid.setElement(x, y, num);
 
@@ -51,5 +50,4 @@ public boolean isSolvable(Grid grid) {
 
         return false;
     }
-    
 }

@@ -11,11 +11,15 @@ public class Cell {
         this.val = 0;
     }
 
-    void setVal(int val) {
+    public void setVal(int val) {
         this.val = val;
     }
+    
+    public int getval() {
+    	return val;
+    }
 
-    void resetVal() {
+    public void resetVal() {
         this.val = 0;
     }
 }

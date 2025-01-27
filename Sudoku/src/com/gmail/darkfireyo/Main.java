@@ -3,9 +3,10 @@ package com.gmail.darkfireyo;
 public class Main {
 
     public static void main(String[] args) {
-        int taillex = 9;
-        int tailley = 9;
-        Grid grille = new Grid(taillex, tailley);
+        int taillex = 16;
+        int tailley = 16;
+        int testbordelique = (int) Math.sqrt(taillex);
+        Grid grille = new Grid(taillex, tailley,testbordelique,testbordelique);
 
         Generator generateur = new Generator(grille);
 

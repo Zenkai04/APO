@@ -13,12 +13,10 @@ public class Generator {
 
     public boolean generateNumber(){
         Random rand = new Random();
-
-        return fillGrid(0,0,rand);
+        return fillGrid(0, 0, rand);
     }
 
-    private boolean fillGrid(int x, int y,Random rand){
-
+    private boolean fillGrid(int x, int y, Random rand){
         if (x == currGrid.getWidth()) {
             x = 0;
             y++;
@@ -30,14 +28,14 @@ public class Generator {
             return fillGrid(x + 1, y, rand);
         }
 
-        int[] numbers = new int[9];
-        for (int i = 0; i < 9; i++) {
+        int size = currGrid.getWidth();
+        int[] numbers = new int[size];
+        for (int i = 0; i < size; i++) {
             numbers[i] = i + 1;
         }
 
-
-        for (int i = 0; i < 9; i++) {
-            int j = rand.nextInt(9);
+        for (int i = 0; i < size; i++) {
+            int j = rand.nextInt(size);
             int temp = numbers[i];
             numbers[i] = numbers[j];
             numbers[j] = temp;
@@ -46,7 +44,6 @@ public class Generator {
         for (int num : numbers) {
             if (currGrid.isValid(x, y, num)) {
                 currGrid.setElement(x, y, num);
-
 
                 if (fillGrid(x + 1, y, rand)) {
                     return true;
@@ -61,15 +58,11 @@ public class Generator {
 
     public void deleteNumbers(int numberToDelete) {
         Random rand = new Random();
-
-        
         Grid tempGrid = currGrid.clone();
-        
 
         for (int i = 0; i < numberToDelete; i++) {
             int x = rand.nextInt(currGrid.getWidth());
             int y = rand.nextInt(currGrid.getHeight());
-
 
             if (tempGrid.getElement(x, y) == 0) {
                 i--; // On réessaie
@@ -79,15 +72,11 @@ public class Generator {
             tempGrid.setElement(x, y, 0);
 
             if (!solver.isSolvable(tempGrid)) {
-
                 tempGrid.setElement(x, y, currGrid.getElement(x, y));
                 i--;
             }
         }
 
-
         currGrid.copy(tempGrid);
     }
-    
-
-    }
+}
