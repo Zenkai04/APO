@@ -1,11 +1,18 @@
 package com.gmail.darkfireyo;
 
+/**
+ * La classe Solver fournit des méthodes pour résoudre les puzzles de Sudoku.
+ */
 public class Solver {
 
     public Solver() {
     }
 
-    public void useDeductionRule(Grid grid){
+    /**
+     * Applique une règle de déduction à la grille.
+     * @param grid La grille à laquelle appliquer la règle.
+     */
+    public void useDeductionRule(Grid grid) {
         int length = grid.getWidth();
         for (int x = 0; x < length; x++) {
             int valTest = grid.getElement(x, 0);
@@ -18,15 +25,25 @@ public class Solver {
         }
     }
 
+    /**
+     * Vérifie si la grille est solvable.
+     * @param grid La grille à vérifier.
+     * @return True si la grille est solvable, false sinon.
+     */
     public boolean isSolvable(Grid grid) {
         return solve(grid.clone(), 0, 0);
     }
 
+    /**
+     * Résout le puzzle de Sudoku.
+     * @param grid La grille à résoudre.
+     * @return La grille résolue, ou null si le puzzle n'est pas solvable.
+     */
     public Grid solveSudoku(Grid grid) {
         if (solve(grid, 0, 0)) {
             return grid;
         } else {
-            return null; // Return null if the Sudoku is not solvable
+            return null;
         }
     }
 

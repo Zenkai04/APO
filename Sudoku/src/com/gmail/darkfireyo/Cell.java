@@ -1,5 +1,8 @@
 package com.gmail.darkfireyo;
 
+/**
+ * La classe Cell représente une seule cellule dans une grille de Sudoku.
+ */
 public class Cell {
     private int val;
 
@@ -14,9 +17,9 @@ public class Cell {
     public void setVal(int val) {
         this.val = val;
     }
-    
+
     public int getval() {
-    	return val;
+        return val;
     }
 
     public void resetVal() {
