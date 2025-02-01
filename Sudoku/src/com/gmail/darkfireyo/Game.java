@@ -1,6 +1,7 @@
 
 package com.gmail.darkfireyo;
 
+/*
 public class Game {
     private Generator generator;
     private Grid currentGrid;
@@ -27,3 +28,4 @@ public class Game {
         return currentGrid;
     }
 }
+*/

@@ -13,7 +13,11 @@ public class Generator {
 
     public boolean generateNumber(){
         Random rand = new Random();
-        return fillGrid(0, 0, rand);
+        boolean tryFill = fillGrid(0, 0, rand);
+        if(tryFill) {
+        	return tryFill;
+        }
+        return false;
     }
 
     private boolean fillGrid(int x, int y, Random rand){
