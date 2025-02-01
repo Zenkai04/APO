@@ -83,4 +83,8 @@ public class Generator {
 
         currGrid.copy(tempGrid);
     }
+
+    public Solver getSolver(){
+        return solver;
+    }
 }

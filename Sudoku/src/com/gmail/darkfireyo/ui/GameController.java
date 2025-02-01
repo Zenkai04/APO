@@ -24,6 +24,12 @@ public class GameController {
                 int blockWidth = frame.getBlockWidth();
                 int blockHeight = frame.getBlockHeight();
 
+                if (width % blockWidth != 0 || height % blockHeight != 0) {
+                    System.out.println("Invalid grid dimensions or block sizes. Please try again.");
+                    frame.showErrorLabel(true);
+                    return;
+                }
+
                 grid = new Grid(width, height, blockWidth, blockHeight);
                 generator = new Generator(grid);
                 if (!generator.generateNumber()) {
@@ -34,6 +40,19 @@ public class GameController {
                 frame.showErrorLabel(false);
                 generator.deleteNumbers(20);
                 frame.updateSudokuPanel(grid);
+                frame.getSolveButton().setVisible(true);
+            }
+        });
+
+        frame.getSolveButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (generator.getSolver().isSolvable(grid)) {
+                    Grid solvedGrid = generator.getSolver().solveSudoku(grid);
+                    frame.updateSudokuPanel(solvedGrid);
+                } else {
+                    System.out.println("Failed to solve Sudoku.");
+                }
             }
         });
     }
