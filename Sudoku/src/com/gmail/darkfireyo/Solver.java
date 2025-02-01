@@ -22,6 +22,14 @@ public class Solver {
         return solve(grid.clone(), 0, 0);
     }
 
+    public Grid solveSudoku(Grid grid) {
+        if (solve(grid, 0, 0)) {
+            return grid;
+        } else {
+            return null; // Return null if the Sudoku is not solvable
+        }
+    }
+
     private boolean solve(Grid grid, int x, int y) {
         if (x == grid.getWidth()) {
             x = 0;

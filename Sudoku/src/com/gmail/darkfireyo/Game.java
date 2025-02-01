@@ -2,12 +2,10 @@
 package com.gmail.darkfireyo;
 
 public class Game {
-    private Solver solver;
     private Generator generator;
     private Grid currentGrid;
 
-    public Game(Solver solver, Generator generator) {
-        this.solver = solver;
+    public Game(Generator generator) {
         this.generator = generator;
         this.currentGrid = new Grid(9);
     }
