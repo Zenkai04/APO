@@ -18,26 +18,29 @@ public class Main {
 
 
     public static void main(String[] args) {
-        
-        System.out.println("Choisissez le mode d'affichage:");
-        System.out.println("1. Affichage graphique");
-        System.out.println("2. Affichage textuel");
+    	while(true) {
+    		
+    		print("Choisissez le mode d'affichage:");
+    		print("1. Affichage graphique");
+    		print("2. Affichage textuel");
 
-        int choice = scanner.nextInt();
+    		int choice = scanner.nextInt();
 
-        if (choice == 1) {
-            launchGraphicalMode();
-        } else if (choice == 2) {
-            launchTextualMode(scanner);
-        } else {
-            System.out.println("Choix invalide. Veuillez relancer l'application.");
-        }
+    		if (choice == 1) {
+    			launchGraphicalMode();
+    			return;
+    		} else if (choice == 2) {
+    			launchTextualMode(scanner);
+    			return;
+    		} else {
+    			print("Choix invalide.");
+    		}
+    	}
     }
 
     private static void launchGraphicalMode() {
         SelectionFrame selectionFrame = new SelectionFrame();
         selectionFrame.setVisible(true);
-
         selectionFrame.getSudokuButton().addActionListener(e -> {
             selectionFrame.setVisible(false);
             SudokuFrame sudokuFrame = new SudokuFrame();
@@ -54,9 +57,9 @@ public class Main {
     }
 
     private static void launchTextualMode(Scanner scanner) {
-        System.out.println("Choisissez le type de jeu:");
-        System.out.println("1. Sudoku");
-        System.out.println("2. Multidoku / Sudoku Spéciaux");
+        print("Choisissez le type de jeu:");
+        print("1. Sudoku");
+        print("2. Multidoku / Sudoku Spéciaux");
 
         int gameChoice = scanner.nextInt();
 
@@ -65,7 +68,7 @@ public class Main {
             
         setValues();
 
-        System.out.println("Entrez une difficulté entre 1 et 3:");
+        print("Entrez une difficulté entre 1 et 3:");
         int difficulty = scanner.nextInt();
 
         if(difficulty < 1 ){
@@ -83,37 +86,65 @@ public class Main {
         boolean test = generateur.generateNumber();
         generateur.deleteNumbers(difficulty * (gridLength * gridWidth) / 6);
 
-        System.out.println(grille);
+        print(grille);
 
-        System.out.println("Voulez-vous résoudre la grille ? (O/N)");
+        print("Voulez-vous résoudre la grille ? (O/N)");
 
         String gridsolve = scanner.next();
         if(gridsolve.equals("O") || gridsolve.equals("o")){
             generateur.getSolver().solveSudoku(grille);
-            System.out.println("Grille résolu : ");
-            System.out.println(grille);
+            print("Grille résolu : ");
+            print(grille);
         }
 
         } else if (gameChoice == 2) {
-            System.out.println("Choisissez la forme du Multidoku / Sudoku Speciaux :");
-            System.out.println("1. Multidoku en forme de X");
-            System.out.println("2. Multidoku en forme de +");
-            System.out.println("3. Multidoku coloré");
-            System.out.println("4. Multidoku formé avec des blocs irréguliers");
+            print("Choisissez la forme du Multidoku / Sudoku Speciaux :");
+            print("1. Multidoku en forme de x ou +");
+            print("3. Sudoku coloré");
+            print("4. Sudoku formé avec des blocs irréguliers");
 
             int multidokuChoice = scanner.nextInt();
 
             switch (multidokuChoice) {
                 case 1:
-                    System.out.println("Lancement du Multidoku en forme de X en mode textuel...");
                     
+                    System.out.println("Sélectionnez le type de Multidoku Classique:\n1. Multidoku en X\n2. Multidoku en +");
+                    int classicType = scanner.nextInt();
+        
+                    ClassicMultidoku classicMultidoku;
+                    if (classicType == 1) {
+                        print("Lancement du Multidoku en forme de x en mode textuel...");
+                        classicMultidoku = new ClassicMultidoku(5, 9, 9, 3, 3, "X");
+                        classicMultidoku.generateClassicMultidokuX();
+                    } else if (classicType == 2) {
+                        print("Lancement du Multidoku en forme de + mode textuel...");
+                        classicMultidoku = new ClassicMultidoku(5, 9, 9, 3, 3, "+");
+                        classicMultidoku.generateClassicMultidokuPlus();
+                    } else {
+                        System.out.println("Option invalide.");
+                        scanner.close();
+                        return;
+                    }
+        
+                    for (int i = 0; i < 5; i++) { 
+                        Grid grille = classicMultidoku.getGrid(i);
+                        Generator generator = new Generator(grille);
+                        generator.generateNumber();
+                        
+        
+                        System.out.println("Solution complète de la Grille " + (i + 1) + " générée:");
+                        for (int y = 0; y < grille.getHeight(); y++) {
+                            for (int x = 0; x < grille.getWidth(); x++) {
+                                int value = grille.getElement(x, y);
+                                System.out.print(value + " ");
+                            }
+                            System.out.println();
+                        }
+                    }
+                    classicMultidoku.printSharedBlocks();
                     break;
                 case 2:
-                    System.out.println("Lancement du Multidoku en forme de + en mode textuel...");
-                    // Placeholder for textual Multidoku + implementation
-                    break;
-                case 3:
-                    System.out.println("Lancement du Multidoku coloré en mode textuel...");
+                    print("Lancement du Multidoku coloré en mode textuel...");
                      setValues();
                      ColorGrid grille = new ColorGrid(gridLength, gridWidth, blockLength, blockWidth);
 
@@ -125,46 +156,51 @@ public class Main {
 
             generateur.deleteNumbers(2 *(gridLength * gridWidth) / 6);
 
-            System.out.println("Grille générée:");
-            System.out.println(grille);
+            print("Grille générée:");
+            print(grille);
 
             ColorSolver solver = new ColorSolver();
             Grid solvedGrid = solver.solveSudoku(grille);
 
             if (solvedGrid != null) {
-                System.out.println("Grille résolue:");
-                System.out.println(solvedGrid);
+                print("Grille résolue:");
+                print(solvedGrid);
             } else {
-                System.out.println("La grille n'est pas solvable.");
+                print("La grille n'est pas solvable.");
             }
         } else {
-            System.out.println("Échec de la génération de la grille de Sudoku colorée.");
+            print("Échec de la génération de la grille de Sudoku colorée.");
         }
                     break;
-                case 4:
-                    System.out.println("Lancement du Multidoku formé avec des blocs irréguliers en mode textuel...");
+                case 3:
+                    print("Lancement du Multidoku formé avec des blocs irréguliers en mode textuel...");
                     // Placeholder for textual Multidoku blocs irréguliers implementation
                     break;
                 default:
-                    System.out.println("Choix invalide. Veuillez relancer l'application.");
+                    print("Choix invalide.");
                     break;
             }
         } else {
-            System.out.println("Choix invalide. Veuillez relancer l'application.");
+            print("Choix invalide.");
         }
     }
 
     public static void setValues(){
-        System.out.println("Entrez la longueur de la grille:");
+        print("Entrez la longueur de la grille:");
         gridLength = scanner.nextInt();
 
-        System.out.println("Entrez la largeur de la grille:");
+        print("Entrez la largeur de la grille:");
         gridWidth = scanner.nextInt();
 
-        System.out.println("Entrez la longueur des blocs:");
+        print("Entrez la longueur des blocs:");
         blockLength = scanner.nextInt();
 
-        System.out.println("Entrez la largeur des blocs:");
+        print("Entrez la largeur des blocs:");
         blockWidth = scanner.nextInt();
     }
+    
+    public static void print(Object o) {
+    	System.out.println(o);
+    }
 }
+    

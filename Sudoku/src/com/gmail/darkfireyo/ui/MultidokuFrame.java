@@ -1,7 +1,12 @@
 package com.gmail.darkfireyo.ui;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.util.List;
+
 import javax.swing.*;
-import java.awt.*;
 import com.gmail.darkfireyo.Grid;
 
 /**
@@ -94,6 +99,23 @@ public class MultidokuFrame extends JFrame {
         multidokuPanel = new MultidokuPanel(grid.getWidth(), grid.getHeight());
         multidokuPanel.setPreferredSize(new Dimension(400, 400));
         multidokuPanel.updateGrid(grid);
+        add(multidokuPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+    /**
+     * Met à jour le panneau Multidoku avec une liste de grilles.
+     * @param grids Liste d'objets Grid représentant les grilles à afficher.
+     * @param shape La forme du Multidoku à afficher ("X" ou "+").
+     */
+    public void updateMultidokuPanel(List<Grid> grids, String shape) {
+        if (multidokuPanel != null) {
+            remove(multidokuPanel);
+        }
+        multidokuPanel = new MultidokuPanel(27, 27); // Assuming a 3x3 grid of 9x9 grids
+        multidokuPanel.setPreferredSize(new Dimension(600, 600));
+        multidokuPanel.updateMultidokuPanel(grids, shape);
         add(multidokuPanel, BorderLayout.CENTER);
         revalidate();
         repaint();
