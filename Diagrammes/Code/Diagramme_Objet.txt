@@ -1,44 +1,53 @@
 @startuml
-object joueur {
-    -nom: J1
-    -partie: partie1
+skinparam classAttributeIconSize 0
+
+object selectionFrame {
+    sudokuButton : JButton
+    multidokuButton : JButton
 }
 
-object partie {
-  -solveur: Solveur
-  -generateur: Generateur
-  -grilleCourante: Grille
+object sudokuFrame {
+    widthField : JTextField
+    heightField : JTextField
+    blockWidthField : JTextField
+    blockHeightField : JTextField
+    startButton : JButton
+    solveButton : JButton
+    sudokuPanel : SudokuPanel
+    errorLabel : JLabel
+    difficultySlider : JSlider
 }
 
-object generateur {
-  -grille: Grille
+object sudokuPanel {
+    cells : JTextField[9][9]
 }
 
-object solveur {
-  -grille: Grille
+object sudokuController {
+    frame : SudokuFrame
+    grid : Grid
+    generator : Generator
 }
 
-object grille {
-  -taille: 9
-  -tabCellules: Cellule[]
+object grid {
+    grid : int[9][9]
+    width : 9
+    height : 9
+    blockWidth : 3
+    blockHeight : 3
 }
 
-object cellule1 {
-  -valeur: 5
-  -valeurPossible: [1,2,3,4,5,6,7,8,9]
+object generator {
+    currGrid : Grid
+    solver : Solver
 }
 
-object cellule2 {
-  -valeur: 3
-  -valeurPossible: [1,2,3,4,5,6,7,8,9]
+object solver {
 }
 
-joueur --> partie : crée
-partie --> grille : utilise
-grille --> cellule1 : contient
-grille --> cellule2 : contient
-partie --> generateur : utilise
-partie --> solveur : utilise
-generateur --> grille : génère
-solveur --> grille : résout
+selectionFrame -> sudokuFrame : getSudokuButton()
+sudokuFrame -> sudokuPanel : updateSudokuPanel(grid)
+sudokuController -> sudokuFrame : initializeGame()
+generator -> grid : generateNumber()
+solver -> grid : isSolvable(grid)
+
 @enduml
