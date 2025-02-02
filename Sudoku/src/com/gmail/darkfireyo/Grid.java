@@ -101,4 +101,22 @@ public class Grid {
             }
         }
     }
+    
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (int y = 0; y < height; y++) {
+            StringBuilder ligne = new StringBuilder();
+            for (int i = 0; i < width; i++) {
+                ligne.append((this.getElement(i, y) != 0) ? Integer.toString(this.getElement(i, y), 36) : " "); // On convertis ici en base 36 pour pouvoir aller jusqu'a la lettre Z
+
+                if (i < width - 1) {
+                    ligne.append(" ");
+                }
+            }
+
+           result.append(ligne.toString());
+            result.append(System.lineSeparator());
+        }
+        return result.toString();
+    }
 }

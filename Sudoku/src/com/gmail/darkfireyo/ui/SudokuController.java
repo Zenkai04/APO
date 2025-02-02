@@ -5,17 +5,28 @@ import com.gmail.darkfireyo.Grid;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe contrôleur qui gère les interactions entre l'interface utilisateur et la logique du Sudoku.
+ */
 public class SudokuController {
     private SudokuFrame frame;
     private Grid grid;
     private Generator generator;
 
+    /**
+     * Constructeur de la classe SudokuController.
+     * Initialise le contrôleur et configure les écouteurs d'événements.
+     * 
+     * @param frame la fenêtre de l'application Sudoku
+     */
     public SudokuController(SudokuFrame frame) {
         this.frame = frame;
         initializeGame();
     }
 
-
+    /**
+     * Initialise le jeu en ajoutant des écouteurs aux boutons de l'interface.
+     */
     private void initializeGame() {
         frame.getStartButton().addActionListener(new ActionListener() {
             @Override
@@ -27,7 +38,6 @@ public class SudokuController {
                 int difficulty = frame.getDifficulty();
                 difficulty = difficulty * (width * height) / 6;
                 
-
                 if (width % blockWidth != 0 || height % blockHeight != 0) {
                     System.out.println("Invalid grid dimensions or block sizes. Please try again.");
                     frame.showErrorLabel(true);
