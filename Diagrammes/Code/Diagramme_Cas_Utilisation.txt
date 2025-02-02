@@ -1,29 +1,36 @@
 @startuml
+skinparam actorStyle awesome
 left to right direction
-actor Joueur
-actor "Ordinateur" as Analyse
-rectangle "Systeme Sudoku" {
-    usecase "Démarrer une nouvelle partie" as UC1
-    usecase "Générer une grille de Sudoku" as UC2
-    usecase "Résoudre une grille de Sudoku" as UC3
-    usecase "Vérifier la validité d'une grille" as UC4
-    usecase "Afficher la grille" as UC5
-    usecase "Enregistrer la progression" as UC6
-    usecase "Charger une partie sauvegardée" as UC7
 
-    Joueur -- UC1
-    Joueur -- UC2
-    Joueur -- UC3
-    Joueur -- UC4
-    Joueur -- UC5
-    Joueur -- UC6
-    Joueur -- UC7
+actor "Utilisateur" as user
+actor "Système" as system
 
-    UC3 -- Analyse
-    UC4 -- Analyse
-    
-    UC1 .> UC2 : include
-    UC3 .> UC4 : extend
-    
+rectangle "Application Sudoku" {
+    usecase "Démarrer le jeu" as UC1
+    usecase "Générer un Sudoku" as UC2
+    usecase "Résoudre un Sudoku" as UC3
+    usecase "Sélectionner le mode de jeu" as UC4
+    usecase "Visualiser la grille" as UC5
+    usecase "Afficher le resultat" as UC6
+    usecase "Définir la difficulté" as UC7
+    usecase "Afficher un message d'erreur" as UC8
 }
+
+user --> UC1
+user --> UC2
+user --> UC3 
+user --> UC4 
+user --> UC5 
+user --> UC6 
+user --> UC7 
+
+UC1 --> UC2
+UC2 --> UC8 
+UC3 --> UC8 
+UC4 --> UC5 
+UC5 --> UC6 
+
+UC2 <-- system
+UC3 <-- system
+
 @enduml
