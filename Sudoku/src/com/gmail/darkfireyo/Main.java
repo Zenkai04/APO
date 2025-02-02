@@ -9,8 +9,16 @@ import com.gmail.darkfireyo.ui.MultidokuFrame;
 import java.util.Scanner;
 
 public class Main {
+
+    private static int gridLength;
+    private static int gridWidth;
+    private static int blockLength;
+    private static int blockWidth;
+    private static Scanner scanner = new Scanner(System.in);
+
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        
         System.out.println("Choisissez le mode d'affichage:");
         System.out.println("1. Affichage graphique");
         System.out.println("2. Affichage textuel");
@@ -48,24 +56,14 @@ public class Main {
     private static void launchTextualMode(Scanner scanner) {
         System.out.println("Choisissez le type de jeu:");
         System.out.println("1. Sudoku");
-        System.out.println("2. Multidoku");
+        System.out.println("2. Multidoku / Sudoku Spéciaux");
 
         int gameChoice = scanner.nextInt();
 
 
         if (gameChoice == 1) {
             
-        System.out.println("Entrez la longueur de la grille:");
-        int gridLength = scanner.nextInt();
-
-        System.out.println("Entrez la largeur de la grille:");
-        int gridWidth = scanner.nextInt();
-
-        System.out.println("Entrez la longueur des blocs:");
-        int blockLength = scanner.nextInt();
-
-        System.out.println("Entrez la largeur des blocs:");
-        int blockWidth = scanner.nextInt();
+        setValues();
 
         System.out.println("Entrez une difficulté entre 1 et 3:");
         int difficulty = scanner.nextInt();
@@ -97,7 +95,7 @@ public class Main {
         }
 
         } else if (gameChoice == 2) {
-            System.out.println("Choisissez la forme du Multidoku:");
+            System.out.println("Choisissez la forme du Multidoku / Sudoku Speciaux :");
             System.out.println("1. Multidoku en forme de X");
             System.out.println("2. Multidoku en forme de +");
             System.out.println("3. Multidoku coloré");
@@ -108,7 +106,7 @@ public class Main {
             switch (multidokuChoice) {
                 case 1:
                     System.out.println("Lancement du Multidoku en forme de X en mode textuel...");
-                    // Placeholder for textual Multidoku X implementation
+                    
                     break;
                 case 2:
                     System.out.println("Lancement du Multidoku en forme de + en mode textuel...");
@@ -116,7 +114,32 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("Lancement du Multidoku coloré en mode textuel...");
-                    // Placeholder for textual Multidoku coloré implementation
+                     setValues();
+                     ColorGrid grille = new ColorGrid(gridLength, gridWidth, blockLength, blockWidth);
+
+        ColorGenerator generateur = new ColorGenerator(grille);
+        boolean test = generateur.generateNumber();
+
+        if (test) {
+            grille.assignColors();
+
+            generateur.deleteNumbers(2 *(gridLength * gridWidth) / 6);
+
+            System.out.println("Grille générée:");
+            System.out.println(grille);
+
+            ColorSolver solver = new ColorSolver();
+            Grid solvedGrid = solver.solveSudoku(grille);
+
+            if (solvedGrid != null) {
+                System.out.println("Grille résolue:");
+                System.out.println(solvedGrid);
+            } else {
+                System.out.println("La grille n'est pas solvable.");
+            }
+        } else {
+            System.out.println("Échec de la génération de la grille de Sudoku colorée.");
+        }
                     break;
                 case 4:
                     System.out.println("Lancement du Multidoku formé avec des blocs irréguliers en mode textuel...");
@@ -129,5 +152,19 @@ public class Main {
         } else {
             System.out.println("Choix invalide. Veuillez relancer l'application.");
         }
+    }
+
+    public static void setValues(){
+        System.out.println("Entrez la longueur de la grille:");
+        gridLength = scanner.nextInt();
+
+        System.out.println("Entrez la largeur de la grille:");
+        gridWidth = scanner.nextInt();
+
+        System.out.println("Entrez la longueur des blocs:");
+        blockLength = scanner.nextInt();
+
+        System.out.println("Entrez la largeur des blocs:");
+        blockWidth = scanner.nextInt();
     }
 }

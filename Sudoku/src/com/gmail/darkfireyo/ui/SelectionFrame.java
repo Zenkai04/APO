@@ -16,7 +16,7 @@ public class SelectionFrame extends JFrame {
         setSize(300, 100);
 
         sudokuButton = new JButton("Sudoku Classique");
-        multidokuButton = new JButton("Multidoku");
+        multidokuButton = new JButton("Multidoku / Sudoku Spéciaux");
 
         add(sudokuButton);
         add(multidokuButton);

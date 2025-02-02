@@ -1,7 +1,10 @@
 package com.gmail.darkfireyo.ui;
 
 import com.gmail.darkfireyo.ClassicMultidoku;
+import com.gmail.darkfireyo.ColorGenerator;
+import com.gmail.darkfireyo.ColorGrid;
 import com.gmail.darkfireyo.ColorMultidoku;
+import com.gmail.darkfireyo.ColorSolver;
 import com.gmail.darkfireyo.Generator;
 import com.gmail.darkfireyo.Grid;
 import com.gmail.darkfireyo.ShapeBlock;
@@ -53,20 +56,24 @@ public class MultidokuController {
         frame.getColored().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Map<Integer, String> colorMapping = new HashMap<>();
-                colorMapping.put(1, "rouge");
-                colorMapping.put(2, "bleu");
-                colorMapping.put(3, "vert");
-                colorMapping.put(4, "jaune");
-                colorMapping.put(5, "orange");
-                colorMapping.put(6, "violet");
-                colorMapping.put(7, "rose");
-                colorMapping.put(8, "gris");
-                colorMapping.put(9, "noir");
+                ColorGrid grille = new ColorGrid(9, 9, 3, 3);
 
-                ColorMultidoku colorMultidoku = new ColorMultidoku(9, 9, 3, 3, colorMapping);
-                colorMultidoku.fillColorBlocks();
-                frame.updateMultidokuPanel(colorMultidoku.getGrid());
+        ColorGenerator generateur = new ColorGenerator(grille);
+        boolean test = generateur.generateNumber();
+
+        if (test) {
+            grille.assignColors();
+
+            generateur.deleteNumbers(2 *(9 * 9)/ 6);
+
+            System.out.println("Grille générée:");
+            System.out.println(grille);
+
+            ColorSolver solver = new ColorSolver();
+            Grid solvedGrid = solver.solveSudoku(grille);
+
+                frame.updateMultidokuPanel(solvedGrid);
+            }
             }
         });
 

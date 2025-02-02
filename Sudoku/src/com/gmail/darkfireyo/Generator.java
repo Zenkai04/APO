@@ -13,14 +13,10 @@ public class Generator {
 
     public boolean generateNumber(){
         Random rand = new Random();
-        boolean tryFill = fillGrid(0, 0, rand);
-        if(tryFill) {
-        	return tryFill;
-        }
-        return false;
+        return fillGrid(0, 0, rand);
     }
 
-    private boolean fillGrid(int x, int y, Random rand){
+    protected boolean fillGrid(int x, int y, Random rand){
         if (x == currGrid.getWidth()) {
             x = 0;
             y++;
@@ -69,7 +65,7 @@ public class Generator {
             int y = rand.nextInt(currGrid.getHeight());
 
             if (tempGrid.getElement(x, y) == 0) {
-                i--; // On réessaie
+                i--;
                 continue;
             }
 
@@ -83,8 +79,9 @@ public class Generator {
 
         currGrid.copy(tempGrid);
     }
-
-    public Solver getSolver(){
-        return solver;
+    
+    public Solver getSolver() {
+    	return solver;
     }
 }
+    

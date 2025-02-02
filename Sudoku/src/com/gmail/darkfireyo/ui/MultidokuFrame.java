@@ -29,7 +29,7 @@ public class MultidokuFrame extends JFrame {
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
 
-        JLabel label = new JLabel("Choisissez la forme du Multidoku");
+        JLabel label = new JLabel("Choisissez la forme du Multidoku / Sudoku Spécial");
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         inputPanel.add(label);
 

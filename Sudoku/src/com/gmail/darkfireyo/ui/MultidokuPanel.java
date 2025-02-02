@@ -2,6 +2,8 @@ package com.gmail.darkfireyo.ui;
 
 import javax.swing.*;
 import java.awt.*;
+
+import com.gmail.darkfireyo.ColorGrid;
 import com.gmail.darkfireyo.Grid;
 
 /**
@@ -29,16 +31,46 @@ public class MultidokuPanel extends JPanel {
         }
     }
 
-    /**
-     * Met à jour la grille affichée avec les valeurs de la grille spécifiée.
-     * @param grid La grille à afficher.
-     */
     public void updateGrid(Grid grid) {
         for (int y = 0; y < grid.getHeight(); y++) {
             for (int x = 0; x < grid.getWidth(); x++) {
                 String element = (grid.getElement(x, y) != 0) ? Integer.toString(grid.getElement(x, y), 36) : "";
                 cells[x][y].setText(element);
+
+                if (grid instanceof ColorGrid) {
+                    ColorGrid colorGrid = (ColorGrid) grid;
+                    String colorName = colorGrid.getColor(x, y);
+                    Color color = getColorFromName(colorName);
+                    cells[x][y].setForeground(color);
+                } else {
+                    cells[x][y].setForeground(Color.BLACK);
+                }
             }
+        }
+    }
+
+    private Color getColorFromName(String colorName) {
+        switch (colorName) {
+            case "red":
+                return Color.RED;
+            case "blue":
+                return Color.BLUE;
+            case "green":
+                return Color.GREEN;
+            case "yellow":
+                return Color.YELLOW;
+            case "orange":
+                return Color.ORANGE;
+            case "purple":
+                return Color.MAGENTA;
+            case "cyan":
+                return Color.CYAN;
+            case "magenta":
+                return Color.PINK;
+            case "black":
+                return Color.BLACK;
+            default:
+                return Color.WHITE;
         }
     }
 }
