@@ -1,33 +1,18 @@
 @startuml
-|Joueur|
 start
-:Créer nouvelle partie;
-
-|Partie|
-:Initialiser solveur;
-:Initialiser générateur;
-:Initialiser grille courante;
-
-|Generateur|
-:Generer grille complète;
-:Enlever numéros;
-
-|Partie|
-:Mettre à jour grille courante;
-
-|Solveur|
-:Résoudre grille courante;
-
-:Utiliser règle de déduction;
-if (Non résolu) then (oui)
-  :Utiliser retour sur trace;
+:Initialiser l'interface graphique;
+:Afficher l'écran de démarrage;
+:Sélectionner la taille de la grille (9x9);
+:Sélectionner la taille des blocs (3x3);
+:Sélectionner la difficulté (facile);
+:Créer une instance de Grid;
+:Initialiser la grille avec des valeurs de départ;
+:Afficher la grille sur l'interface graphique;
+:Vérifier si la grille est complète;
+if (Grille complète?) then (Oui)
+  :Afficher un message de victoire;
+else (Non)
+  :Afficher un message de défaite;
 endif
-
-if (Grille valide) then (oui)
-  :Mettre à jour statut à "Résolu";
-else (non)
-  :Mettre à jour statut à "Non résolu";
-endif
-
 stop
 @enduml
