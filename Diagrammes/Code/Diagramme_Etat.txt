@@ -1,31 +1,32 @@
 @startuml
 skinparam state {
-  BackgroundColor<<Partie>> LightBlue
-  BackgroundColor<<Joueur>> LightGreen
-  BackgroundColor<<Solveur>> LightYellow
-  BackgroundColor<<Generateur>> LightSalmon
+  BackgroundColor<<Grid>> LightBlue
+  BackgroundColor<<Block>> LightGreen
+  BackgroundColor<<Solver>> LightYellow
+  BackgroundColor<<Generator>> LightSalmon
 }
 
-[*] --> Joueur : Démarrer
-Joueur --> Partie : créeNouvellePartie()
-Partie --> Generateur : genererNouveauPuzzle()
-Generateur --> Grille : genererGrilleComplete()
-Generateur --> Partie : enleverNumeros()
-Partie --> Joueur : nouvellePartie()
+[*] --> Grid : Initialize
+Grid --> Block : createBlocks()
+Block --> Cell : addCells()
+Grid --> Solver : solveGrid()
+Solver --> Grid : isSolvable()
+Solver --> Grid : solveSudoku()
+Grid --> Generator : generateGrid()
+Generator --> Grid : generateNumber()
+Generator --> Grid : deleteNumbers()
 
-Joueur --> Partie : resoudrePartie()
-Partie --> Solveur : resoudreGrilleCourante()
-Solveur --> Grille : utiliserRegleDeduction()
-Solveur --> Grille : utiliserRetourSurTrace()
-Grille --> Solveur : estResolvable()
-Solveur --> Partie : grilleRésolue
-Partie --> Joueur : partieRésolue()
-
-Joueur : nom
-Partie : grilleCourante
-Generateur : grille
-Solveur : grille
-Grille : tabCellules
-Cellule : valeur
+Grid : width
+Grid : height
+Grid : blockWidth
+Grid : blockHeight
+Block : cells
+Block : width
+Block : height
+Cell : val
+Cell : row
+Cell : col
+Solver : grid
+Generator : currGrid
 
 @enduml
