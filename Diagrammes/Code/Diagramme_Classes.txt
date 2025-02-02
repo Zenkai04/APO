@@ -1,69 +1,163 @@
 @startuml
 skinparam classAttributeIconSize 0
 
-class Grid {
- -gridArr: int[]
- -width: int
- -height: int
- +Grid(width: int, height: int)
- +getElement(x: int, y: int): int
- +setElement(x: int, value: int)
-}
-
 class Cell {
  -val: int
- +Cell(val: int)
+ -row: int
+ -col: int
+ +Cell()
+ +Cell(row: int, col: int)
  +getVal(): int
- ~setVal(val: int)
- ~resetVal()
+ +setVal(val: int)
+ +getRow(): int
+ +getCol(): int
+}
+
+class Grid {
+ -grid: int[][]
+ -width: int
+ -height: int
+ -blockWidth: int
+ -blockHeight: int
+ +Grid(width: int, height: int, blockWidth: int, blockHeight: int)
+ +getWidth(): int
+ +getHeight(): int
+ +getBlockWidth(): int
+ +getBlockHeight(): int
+ +getElement(x: int, y: int): int
+ +setElement(x: int, y: int, value: int)
+ +isValid(x: int, y: int, value: int): boolean
+ +clone(): Grid
+ +copy(other: Grid)
+ +toString(): String
 }
 
 class Block {
- -cells: Cell[3][3]
- +Block(cells: Cell[3][3])
+ -cells: Cell[]
+ -height: int
+ -width: int
+ -cellSet: Set<Cell>
+ +Block(width: int, height: int)
+ +addCell(x: int, y: int)
+ +containsCell(x: int, y: int): boolean
+ +getCell(x: int, y: int): Cell
+ +setCell(x: int, y: int, value: int)
+ +getWidth(): int
+ +getHeight(): int
+ +getSize(): int
+ +getCells(): Set<Cell>
 }
 
 class Solver {
+ +Solver()
+ +isDeductable(grid: Grid): boolean
+ +isSolvable(grid: Grid): boolean
+ +solveSudoku(grid: Grid): Grid
+ -solve(grid: Grid, x: int, y: int): boolean
+}
+
+class ColorGrid extends Grid {
+ -ansiColorMap: Map<String, String>
+ -colorAssignments: Map<Integer, Set<String>>
+ +ColorGrid(width: int, height: int, blockWidth: int, blockHeight: int)
+ +assignColors()
+ +getColor(x: int, y: int): String
+ +toString(): String
+}
+
+class RandomGrid extends Grid {
+ -blocks: List<RandomBlock>
+ +RandomGrid()
+ +generateRandomBlocks(): List<RandomBlock>
+ +generateGrid()
+ +printBlocks()
+}
+
+class ColorMultidoku {
  -grid: Grid
- +Solver(grid: Grid)
- ~useDeductionRule()
- ~useBacktracking()
- ~isSolvable()
+ -colorMapping: Map<Integer, String>
+ -colorBlocks: Map<String, Set<Coordinate>>
+ +ColorMultidoku(width: int, height: int, blockWidth: int, blockHeight: int, colorMapping: Map<Integer, String>)
+ +setElement(x: int, y: int, value: int)
+ +getElement(x: int, y: int): int
+ +isValid(x: int, y: int, value: int): boolean
+ +getColorAt(x: int, y: int): String
+ +fillColorBlocks()
+}
+
+class RandomBlock extends Block {
+ -cellSet: Set<Cell>
+ +RandomBlock(width: int, height: int)
+ +addCell(x: int, y: int)
+ +getCells(): Set<Cell>
+ +isComplete(): boolean
+ +containsCell(x: int, y: int): boolean
+ +clear()
+}
+
+class MultiDoku extends Grid {
+ -topGrid: Grid
+ -leftGrid: Grid
+ -rightGrid: Grid
+ -bottomGrid: Grid
+ -topLeftGrid: Grid
+ -topRightGrid: Grid
+ -bottomLeftGrid: Grid
+ -bottomRightGrid: Grid
+ -shape: String
+ -grids: List<Grid>
+ +MultiDoku(shape: String)
+ +generateGrids()
+ +printGrids()
+}
+
+class MultiDokuSolver extends Solver {
+ +MultiDokuSolver()
+ +isSolvable(grid: Grid): boolean
+ +solveSudoku(grid: Grid): Grid
+}
+
+class ColorSolver extends Solver {
+ +isSolvable(grid: Grid): boolean
+ +solveSudoku(grid: Grid): Grid
+}
+
+class RandomSolver extends Solver {
+ +RandomSolver()
+ +isSolvable(grid: Grid): boolean
+ +solveSudoku(grid: Grid): Grid
 }
 
 class Generator {
- -grid: Grid
- +Generator(grid: Grid)
- ~generateCompleteGrid()
- ~removeNumbers()
- ~isUniqueSolution()
-}
-
-class Game {
+ -currGrid: Grid
  -solver: Solver
- -generator: Generator
- -currentGrid: Grid
- +Game(solver: Solver, generator: Generator)
- ~newGame()
- ~solveCurrentGrid()
- ~generateNewPuzzle()
+ +Generator(grid: Grid)
+ +generateNumber(): boolean
+ +deleteNumbers(numberToDelete: int)
+ +getSolver(): Solver
 }
 
-class Player {
- -name: String
- -currentGame: Game
- +Player(name: String)
- +createNewGame(solver: Solver, generator: Generator)
- +solveGame()
+class ColorGenerator extends Generator {
+ -colorGrid: ColorGrid
+ +ColorGenerator(grid: ColorGrid)
+ +generateNumber(): boolean
 }
 
+class RandomGenerator extends Generator {
+ +RandomGenerator(grid: Grid)
+ +generateNumber(): boolean
+ +fillGrid(x: int, y: int, rand: Random): boolean
+}
+
+class MultiDokuGenerator extends Generator {
+ +MultiDokuGenerator(grid: Grid)
+ +generateNumber(): boolean
+ +deleteNumbers(numberToDelete: int)
+}
 
 Grid "1" *-- "*" Block
 Block "1" *-- "9" Cell
 Solver "1" *-- "1" Grid
+ColorMultidoku "1" *-- "1" Grid
 Generator "1" *-- "1" Grid
-Game "1" *-- "1" Solver
-Game "1" *-- "1" Generator
-Game "1" *-- "1" Grid
-Player "1" *-- "1" Game
 @enduml
