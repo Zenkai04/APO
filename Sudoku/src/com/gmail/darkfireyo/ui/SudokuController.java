@@ -2,6 +2,8 @@ package com.gmail.darkfireyo.ui;
 
 import com.gmail.darkfireyo.Generator;
 import com.gmail.darkfireyo.Grid;
+import com.gmail.darkfireyo.Main;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,11 +33,24 @@ public class SudokuController {
         frame.getStartButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int width = frame.getGridWidth();
-                int height = frame.getGridHeight();
-                int blockWidth = frame.getBlockWidth();
-                int blockHeight = frame.getBlockHeight();
-                int difficulty = frame.getDifficulty();
+            	int width = 0;
+            	int height = 0;
+            	int blockWidth = 0;
+            	int blockHeight = 0;
+            	int difficulty = 0;
+            	try {
+            		 width = frame.getGridWidth();
+                     height = frame.getGridHeight();
+                     blockWidth = frame.getBlockWidth();
+                     blockHeight = frame.getBlockHeight();
+                     difficulty = frame.getDifficulty();
+            	}catch(Exception ex) {
+            		Main.print("Valeur attribuésnon conforme");
+            		frame.showErrorLabel(true);
+            		return;
+            		
+            	}
+                
                 difficulty = difficulty * (width * height) / 6;
                 
                 if (width % blockWidth != 0 || height % blockHeight != 0) {

@@ -79,12 +79,25 @@ public class Main {
 
         Grid grille = new Grid(gridLength, gridWidth, blockLength, blockWidth);
 
-
-
         Generator generateur = new Generator(grille);
+        
+        print("Voulez vous entrer une grille ou laisser le programme la créer ?");
+        print("1. Rentrer la grille");
+        print("2. Laisser le programme génerer");
+        int gridChoice = scanner.nextInt();
+        if(gridChoice == 1) {
+        	for(int x = 0; x < grille.getWidth(); x++) {
+        		for(int y = 0; y < grille.getHeight(); y++) {
+        			Main.print("x : " + x + "y : " + y);
+        			grille.setElement(x, y, scanner.nextInt());
+        		}
+        	}
+        }else {
+        	  boolean test = generateur.generateNumber();
+              generateur.deleteNumbers(difficulty * (gridLength * gridWidth) / 6);
 
-        boolean test = generateur.generateNumber();
-        generateur.deleteNumbers(difficulty * (gridLength * gridWidth) / 6);
+              
+        }
 
         print(grille);
 
@@ -92,9 +105,14 @@ public class Main {
 
         String gridsolve = scanner.next();
         if(gridsolve.equals("O") || gridsolve.equals("o")){
-            generateur.getSolver().solveSudoku(grille);
-            print("Grille résolu : ");
-            print(grille);
+            Grid newGrid = generateur.getSolver().solveSudoku(grille);
+            if (newGrid != null) {
+            	print("Grille résolu : ");
+                print(grille);
+            }else {
+            	print("Impossible de résoudre la grille");
+            }
+            
         }
 
         } else if (gameChoice == 2) {
@@ -111,37 +129,22 @@ public class Main {
                     System.out.println("Sélectionnez le type de Multidoku Classique:\n1. Multidoku en X\n2. Multidoku en +");
                     int classicType = scanner.nextInt();
         
-                    ClassicMultidoku classicMultidoku;
                     if (classicType == 1) {
                         print("Lancement du Multidoku en forme de x en mode textuel...");
-                        classicMultidoku = new ClassicMultidoku(5, 9, 9, 3, 3, "X");
-                        classicMultidoku.generateClassicMultidokuX();
+                        MultiDoku multiDoku = new MultiDoku("croix");
+                        multiDoku.generateGrids();
+                        multiDoku.printGrids();
                     } else if (classicType == 2) {
                         print("Lancement du Multidoku en forme de + mode textuel...");
-                        classicMultidoku = new ClassicMultidoku(5, 9, 9, 3, 3, "+");
-                        classicMultidoku.generateClassicMultidokuPlus();
+                        MultiDoku multiDoku = new MultiDoku("plus");
+                        multiDoku.generateGrids();
+                        multiDoku.printGrids();
                     } else {
                         System.out.println("Option invalide.");
                         scanner.close();
                         return;
                     }
-        
-                    for (int i = 0; i < 5; i++) { 
-                        Grid grille = classicMultidoku.getGrid(i);
-                        Generator generator = new Generator(grille);
-                        generator.generateNumber();
-                        
-        
-                        System.out.println("Solution complète de la Grille " + (i + 1) + " générée:");
-                        for (int y = 0; y < grille.getHeight(); y++) {
-                            for (int x = 0; x < grille.getWidth(); x++) {
-                                int value = grille.getElement(x, y);
-                                System.out.print(value + " ");
-                            }
-                            System.out.println();
-                        }
-                    }
-                    classicMultidoku.printSharedBlocks();
+
                     break;
                 case 2:
                     print("Lancement du Multidoku coloré en mode textuel...");

@@ -8,23 +8,22 @@ public class Solver {
     public Solver() {
     }
 
-    /**
-     * Applique une règle de déduction à la grille.
-     * @param grid La grille à laquelle appliquer la règle.
-     */
-    public void useDeductionRule(Grid grid) {
-        int length = grid.getWidth();
-        for (int x = 0; x < length; x++) {
-            int valTest = grid.getElement(x, 0);
-            for (int y = 1; y < length; y++) {
-                if (valTest == grid.getElement(x, y)) {
-                    grid.setElement(x, y, valTest + 1);
-                    x = 0;
-                }
-            }
-        }
-    }
+ 
 
+    public boolean isDeductable(Grid grid) {
+    	for(int x = 0; x < grid.getWidth();x++) {
+    		for(int y = 0; y < grid.getHeight();y++) {
+    			int back = grid.getElement(x, y);
+    			grid.setElement(x, y, 0);
+    			
+    			if(!grid.isValid(x, y, back)) {
+    				return false;
+    			}
+    			grid.setElement(x, y, back);
+    		}
+    	}
+    	return true;
+    }
     /**
      * Vérifie si la grille est solvable.
      * @param grid La grille à vérifier.
@@ -41,7 +40,7 @@ public class Solver {
      */
     public Grid solveSudoku(Grid grid) {
         if (solve(grid, 0, 0)) {
-            return grid;
+            return isDeductable(grid)? grid : null;
         } else {
             return null;
         }

@@ -75,10 +75,10 @@ public class MultidokuPanel extends JPanel {
             fillGrid(cells, grids.get(1), 3, 3);
     
 
-            fillGrid(cells, grids.get(3), 15, 3);
+            fillGrid(cells, grids.get(2), 15, 3);
     
 
-            fillGrid(cells, grids.get(2), 3, 15);
+            fillGrid(cells, grids.get(3), 3, 15);
     
             // Bottom-right grid (grid 5)
             fillGrid(cells, grids.get(4), 15, 15);
@@ -89,10 +89,10 @@ public class MultidokuPanel extends JPanel {
 
             fillGrid(cells, grids.get(1), 3, 9);
     
-            fillGrid(cells, grids.get(3), 15, 9);
+            fillGrid(cells, grids.get(2), 15, 9);
     
 
-              fillGrid(cells, grids.get(2), 9, 3);
+              fillGrid(cells, grids.get(3), 9, 3);
     
             
             fillGrid(cells, grids.get(4), 9, 15);

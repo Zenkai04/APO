@@ -1,14 +1,11 @@
 package com.gmail.darkfireyo.ui;
 
-import com.gmail.darkfireyo.ClassicMultidoku;
 import com.gmail.darkfireyo.ColorGenerator;
 import com.gmail.darkfireyo.ColorGrid;
-import com.gmail.darkfireyo.ColorMultidoku;
 import com.gmail.darkfireyo.ColorSolver;
 import com.gmail.darkfireyo.Generator;
 import com.gmail.darkfireyo.Grid;
-import com.gmail.darkfireyo.ShapeBlock;
-import com.gmail.darkfireyo.ShapeMultidoku;
+import com.gmail.darkfireyo.MultiDoku;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,12 +35,12 @@ public class MultidokuController {
         frame.getFirstShape().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ClassicMultidoku classicMultidoku = new ClassicMultidoku(5, 9, 9, 3, 3, "X");
-                classicMultidoku.generateClassicMultidokuX();
+            	MultiDoku multiDoku = new MultiDoku("croix");
+                multiDoku.generateGrids();
 
                 List<Grid> grids = new ArrayList<>();
                 for (int i = 0; i < 5; i++) {
-                    Grid grille = classicMultidoku.getGrid(i);
+                    Grid grille = multiDoku.getGrid(i);
                     Generator generator = new Generator(grille);
                     generator.generateNumber();
                     grids.add(grille);
@@ -58,12 +55,13 @@ public class MultidokuController {
         frame.getSecondShape().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ClassicMultidoku classicMultidoku = new ClassicMultidoku(5, 9, 9, 3, 3, "+");
-                classicMultidoku.generateClassicMultidokuPlus();
+            	MultiDoku multiDoku = new MultiDoku("plus");
+                multiDoku.generateGrids();
+
 
                 List<Grid> grids = new ArrayList<>();
                 for (int i = 0; i < 5; i++) {
-                    Grid grille = classicMultidoku.getGrid(i);
+                    Grid grille = multiDoku.getGrid(i);
                     Generator generator = new Generator(grille);
                     generator.generateNumber();
                     grids.add(grille);
