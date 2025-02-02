@@ -27,7 +27,7 @@ public class SudokuFrame extends JFrame {
         setTitle("Sudoku");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        setSize(1320, 740);
+        setSize(1400, 740);
 
         JPanel inputPanel = new JPanel(new FlowLayout());
         inputPanel.add(new JLabel("Largeur de la grille:"));

@@ -46,6 +46,15 @@ public class Solver {
         }
     }
 
+    
+
+    /**
+     * Résout le puzzle de Sudoku.
+     * @param grid La grille à résoudre.
+     * @param x La position x actuelle dans la grille.
+     * @param y La position y actuelle dans la grille.
+     * @return La grille résolue, ou null si le puzzle n'est pas solvable.
+     */
     private boolean solve(Grid grid, int x, int y) {
         if (x == grid.getWidth()) {
             x = 0;

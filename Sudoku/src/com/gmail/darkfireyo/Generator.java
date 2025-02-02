@@ -2,21 +2,39 @@ package com.gmail.darkfireyo;
 
 import java.util.Random;
 
+/**
+ * Générateur de grille pour un jeu de type Sudoku.
+ */
 public class Generator {
     private Grid currGrid;
     private Solver solver;
 
-    public Generator(Grid grid){
+    /**
+     * Constructeur de la classe Generator.
+     * @param grid La grille à générer.
+     */
+    public Generator(Grid grid) {
         this.currGrid = grid;
         this.solver = new Solver();
     }
 
-    public boolean generateNumber(){
+    /**
+     * Génère une grille remplie avec des nombres valides.
+     * @return true si la génération est réussie, false sinon.
+     */
+    public boolean generateNumber() {
         Random rand = new Random();
         return fillGrid(0, 0, rand);
     }
 
-    protected boolean fillGrid(int x, int y, Random rand){
+    /**
+     * Remplit la grille de manière récursive avec des nombres aléatoires tout en respectant les règles du jeu.
+     * @param x Coordonnée x actuelle dans la grille.
+     * @param y Coordonnée y actuelle dans la grille.
+     * @param rand Générateur de nombres aléatoires.
+     * @return true si la grille est remplie avec succès, false sinon.
+     */
+    protected boolean fillGrid(int x, int y, Random rand) {
         if (x == currGrid.getWidth()) {
             x = 0;
             y++;
@@ -56,6 +74,10 @@ public class Generator {
         return false;
     }
 
+    /**
+     * Supprime un certain nombre d'éléments de la grille tout en s'assurant qu'elle reste solvable.
+     * @param numberToDelete Nombre de cases à supprimer.
+     */
     public void deleteNumbers(int numberToDelete) {
         Random rand = new Random();
         Grid tempGrid = currGrid.clone();
@@ -79,9 +101,12 @@ public class Generator {
 
         currGrid.copy(tempGrid);
     }
-    
+
+    /**
+     * Retourne l'instance du solveur utilisée.
+     * @return L'objet Solver associé.
+     */
     public Solver getSolver() {
-    	return solver;
+        return solver;
     }
 }
-    

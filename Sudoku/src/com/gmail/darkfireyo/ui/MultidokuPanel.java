@@ -32,6 +32,10 @@ public class MultidokuPanel extends JPanel {
         }
     }
 
+    /**
+     * Met à jour la grille affichée avec les valeurs de la grille donnée.
+     * @param grid La grille à afficher.
+     */
     public void updateGrid(Grid grid) {
         for (int y = 0; y < grid.getHeight(); y++) {
             for (int x = 0; x < grid.getWidth(); x++) {
@@ -50,13 +54,18 @@ public class MultidokuPanel extends JPanel {
         }
     }
 
+    /**
+     * Met à jour le panneau Multidoku avec les grilles et la forme spécifiées.
+     * @param grids La liste des grilles à afficher.
+     * @param shape La forme de disposition des grilles ("X" ou "+").
+     */
     public void updateMultidokuPanel(List<Grid> grids, String shape) {
         removeAll();
-        setLayout(new GridLayout(27, 27)); // 27x27 grid for the entire panel
+        setLayout(new GridLayout(27, 27)); // Grille 27x27 pour l'ensemble du panneau
     
-        cells = new JTextField[27][27]; // 27x27 cells for the entire panel
+        cells = new JTextField[27][27]; // 27x27 cellules pour l'ensemble du panneau
     
-        // Initialize all cells
+        // Initialiser toutes les cellules
         for (int y = 0; y < 27; y++) {
             for (int x = 0; x < 27; x++) {
                 cells[x][y] = new JTextField();
@@ -68,33 +77,22 @@ public class MultidokuPanel extends JPanel {
         }
     
         if (shape.equals("X")) {
-            // Center grid (grid 1)
+            // Grille centrale (grille 1)
             fillGrid(cells, grids.get(0), 9, 9);
     
-
+            // Grilles aux coins
             fillGrid(cells, grids.get(1), 3, 3);
-    
-
             fillGrid(cells, grids.get(2), 15, 3);
-    
-
             fillGrid(cells, grids.get(3), 3, 15);
-    
-            // Bottom-right grid (grid 5)
             fillGrid(cells, grids.get(4), 15, 15);
-        }else if (shape.equals("+")) {
-            // Top-left grid (grid 1)
+        } else if (shape.equals("+")) {
+            // Grille centrale (grille 1)
             fillGrid(cells, grids.get(0), 9, 9);
     
-
+            // Grilles en croix
             fillGrid(cells, grids.get(1), 3, 9);
-    
             fillGrid(cells, grids.get(2), 15, 9);
-    
-
-              fillGrid(cells, grids.get(3), 9, 3);
-    
-            
+            fillGrid(cells, grids.get(3), 9, 3);
             fillGrid(cells, grids.get(4), 9, 15);
         } 
     
@@ -102,6 +100,13 @@ public class MultidokuPanel extends JPanel {
         repaint();
     }
     
+    /**
+     * Remplit une section de la grille avec les valeurs de la grille donnée.
+     * @param cells Les cellules de la grille.
+     * @param grid La grille à afficher.
+     * @param offsetX L'offset en X pour placer la grille.
+     * @param offsetY L'offset en Y pour placer la grille.
+     */
     private void fillGrid(JTextField[][] cells, Grid grid, int offsetX, int offsetY) {
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
@@ -120,6 +125,11 @@ public class MultidokuPanel extends JPanel {
         }
     }
     
+    /**
+     * Retourne la couleur correspondant au nom donné.
+     * @param colorName Le nom de la couleur.
+     * @return La couleur correspondante.
+     */
     private Color getColorFromName(String colorName) {
         switch (colorName) {
             case "red":

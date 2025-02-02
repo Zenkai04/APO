@@ -3,6 +3,9 @@ package com.gmail.darkfireyo;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe représentant un MultiDoku, une variante du Sudoku avec plusieurs grilles interconnectées.
+ */
 public class MultiDoku extends Grid {
     private Grid topGrid;
     private Grid leftGrid;
@@ -15,10 +18,15 @@ public class MultiDoku extends Grid {
     private String shape;
     private List<Grid> grids;
 
+    /**
+     * Constructeur de la classe MultiDoku.
+     * @param shape La forme du MultiDoku ("plus" ou "croix").
+     */
     public MultiDoku(String shape) {
-        super(9, 9, 3, 3); // Initialize the central grid with 9x9 size and 3x3 blocks
+        super(9, 9, 3, 3); // Initialise la grille centrale avec une taille 9x9 et des blocs 3x3
         this.shape = shape;
         grids = new ArrayList<>();
+        
         if (shape.equals("plus")) {
             this.topGrid = new Grid(9, 9, 3, 3);
             this.leftGrid = new Grid(9, 9, 3, 3);
@@ -40,9 +48,11 @@ public class MultiDoku extends Grid {
             grids.add(bottomLeftGrid);
             grids.add(bottomRightGrid);
         }
-
     }
 
+    /**
+     * Génère les grilles du MultiDoku en fonction de sa forme.
+     */
     public void generateGrids() {
         Generator centralGenerator = new Generator(this);
         centralGenerator.generateNumber();
@@ -54,6 +64,9 @@ public class MultiDoku extends Grid {
         }
     }
 
+    /**
+     * Génère et remplit les grilles adjacentes pour la forme "plus".
+     */
     private void generatePlusGrids() {
         Solver solver = new Solver();
 
@@ -68,33 +81,42 @@ public class MultiDoku extends Grid {
         solver.solveSudoku(bottomGrid);
 
         copyBlock(leftGrid, 3, this, 1);
-        copyBlock(leftGrid,6, this, 4);
-        copyBlock(leftGrid, 9, this,7);
+        copyBlock(leftGrid, 6, this, 4);
+        copyBlock(leftGrid, 9, this, 7);
         solver.solveSudoku(leftGrid);
 
         copyBlock(rightGrid, 1, this, 3);
-        copyBlock(rightGrid,4, this, 6);
-        copyBlock(rightGrid, 7, this,9);
+        copyBlock(rightGrid, 4, this, 6);
+        copyBlock(rightGrid, 7, this, 9);
         solver.solveSudoku(rightGrid);
     }
 
+    /**
+     * Génère et remplit les grilles adjacentes pour la forme "croix".
+     */
     private void generateCroixGrids() {
         Solver solver = new Solver();
 
         copyBlock(topLeftGrid, 9, this, 1);
         solver.solveSudoku(topLeftGrid);
 
-        copyBlock(topRightGrid, 7, this,3);
+        copyBlock(topRightGrid, 7, this, 3);
         solver.solveSudoku(topRightGrid);
 
-        copyBlock(bottomRightGrid, 1, this,9);
+        copyBlock(bottomRightGrid, 1, this, 9);
         solver.solveSudoku(bottomRightGrid);
 
-        copyBlock(bottomLeftGrid,3, this,7);
+        copyBlock(bottomLeftGrid, 3, this, 7);
         solver.solveSudoku(bottomLeftGrid);
     }
 
-
+    /**
+     * Copie un bloc d'une grille source vers une grille cible.
+     * @param targetGrid La grille cible.
+     * @param targetBlock Le bloc cible dans la grille cible.
+     * @param sourceGrid La grille source.
+     * @param sourceBlock Le bloc source dans la grille source.
+     */
     private void copyBlock(Grid targetGrid, int targetBlock, Grid sourceGrid, int sourceBlock) {
         int[][] targetCoords = getBlockCoordinates(targetBlock);
         int[][] sourceCoords = getBlockCoordinates(sourceBlock);
@@ -109,6 +131,11 @@ public class MultiDoku extends Grid {
         }
     }
 
+    /**
+     * Obtient les coordonnées des cellules d'un bloc donné.
+     * @param blockNumber Le numéro du bloc (1 à 9).
+     * @return Un tableau contenant les coordonnées des cellules du bloc.
+     */
     private int[][] getBlockCoordinates(int blockNumber) {
         int[][] coords = new int[9][2];
         int startX = ((blockNumber - 1) % 3) * 3;
@@ -122,34 +149,41 @@ public class MultiDoku extends Grid {
                 index++;
             }
         }
-
         return coords;
     }
 
+    /**
+     * Récupère une grille spécifique du MultiDoku.
+     * @param i L'index de la grille dans la liste.
+     * @return La grille correspondante.
+     */
     public Grid getGrid(int i) {
         return grids.get(i);
     }
 
+    /**
+     * Affiche toutes les grilles du MultiDoku.
+     */
     public void printGrids() {
-        Main.print("Central Grid:");
+        Main.print("Grille Centrale:");
         Main.print(this);
         if (shape.equals("plus")) {
-            Main.print("Top Grid:");
+            Main.print("Grille du Haut:");
             Main.print(topGrid);
-            Main.print("Left Grid:");
+            Main.print("Grille de Gauche:");
             Main.print(leftGrid);
-            Main.print("Right Grid:");
+            Main.print("Grille de Droite:");
             Main.print(rightGrid);
-            Main.print("Bottom Grid:");
+            Main.print("Grille du Bas:");
             Main.print(bottomGrid);
         } else if (shape.equals("croix")) {
-            Main.print("Top Left Grid:");
+            Main.print("Grille Haut Gauche:");
             Main.print(topLeftGrid);
-            Main.print("Top Right Grid:");
+            Main.print("Grille Haut Droite:");
             Main.print(topRightGrid);
-            Main.print("Bottom Left Grid:");
+            Main.print("Grille Bas Gauche:");
             Main.print(bottomLeftGrid);
-            Main.print("Bottom Right Grid:");
+            Main.print("Grille Bas Droite:");
             Main.print(bottomRightGrid);
         }
     }

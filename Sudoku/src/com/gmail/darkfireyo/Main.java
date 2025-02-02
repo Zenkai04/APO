@@ -8,6 +8,11 @@ import com.gmail.darkfireyo.ui.MultidokuFrame;
 
 import java.util.Scanner;
 
+/**
+ * La classe Main est le point d'entrée de l'application Sudoku.
+ * Elle permet de choisir entre un mode d'affichage graphique ou textuel,
+ * et de lancer les différentes fonctionnalités du jeu en fonction du choix de l'utilisateur.
+ */
 public class Main {
 
     private static int gridLength;
@@ -16,28 +21,33 @@ public class Main {
     private static int blockWidth;
     private static Scanner scanner = new Scanner(System.in);
 
-
+    /**
+     * Méthode principale qui démarre l'application.
+     * @param args Arguments de la ligne de commande (non utilisés).
+     */
     public static void main(String[] args) {
-    	while(true) {
-    		
-    		print("Choisissez le mode d'affichage:");
-    		print("1. Affichage graphique");
-    		print("2. Affichage textuel");
+        while (true) {
+            print("Choisissez le mode d'affichage:");
+            print("1. Affichage graphique");
+            print("2. Affichage textuel");
 
-    		int choice = scanner.nextInt();
+            int choice = scanner.nextInt();
 
-    		if (choice == 1) {
-    			launchGraphicalMode();
-    			return;
-    		} else if (choice == 2) {
-    			launchTextualMode(scanner);
-    			return;
-    		} else {
-    			print("Choix invalide.");
-    		}
-    	}
+            if (choice == 1) {
+                launchGraphicalMode();
+                return;
+            } else if (choice == 2) {
+                launchTextualMode(scanner);
+                return;
+            } else {
+                print("Choix invalide.");
+            }
+        }
     }
 
+    /**
+     * Lance le mode d'affichage graphique.
+     */
     private static void launchGraphicalMode() {
         SelectionFrame selectionFrame = new SelectionFrame();
         selectionFrame.setVisible(true);
@@ -56,6 +66,10 @@ public class Main {
         });
     }
 
+    /**
+     * Lance le mode d'affichage textuel.
+     * @param scanner Scanner pour lire les entrées de l'utilisateur.
+     */
     private static void launchTextualMode(Scanner scanner) {
         print("Choisissez le type de jeu:");
         print("1. Sudoku");
@@ -63,57 +77,51 @@ public class Main {
 
         int gameChoice = scanner.nextInt();
 
-
         if (gameChoice == 1) {
-            
-        setValues();
+            setValues();
 
-        print("Entrez une difficulté entre 1 et 3:");
-        int difficulty = scanner.nextInt();
+            print("Entrez une difficulté entre 1 et 3:");
+            int difficulty = scanner.nextInt();
 
-        if(difficulty < 1 ){
-            difficulty = 1;
-        } else if(difficulty > 3){
-            difficulty = 3;
-        }
-
-        Grid grille = new Grid(gridLength, gridWidth, blockLength, blockWidth);
-
-        Generator generateur = new Generator(grille);
-        
-        print("Voulez vous entrer une grille ou laisser le programme la créer ?");
-        print("1. Rentrer la grille");
-        print("2. Laisser le programme génerer");
-        int gridChoice = scanner.nextInt();
-        if(gridChoice == 1) {
-        	for(int x = 0; x < grille.getWidth(); x++) {
-        		for(int y = 0; y < grille.getHeight(); y++) {
-        			Main.print("x : " + x + "y : " + y);
-        			grille.setElement(x, y, scanner.nextInt());
-        		}
-        	}
-        }else {
-        	  boolean test = generateur.generateNumber();
-              generateur.deleteNumbers(difficulty * (gridLength * gridWidth) / 6);
-
-              
-        }
-
-        print(grille);
-
-        print("Voulez-vous résoudre la grille ? (O/N)");
-
-        String gridsolve = scanner.next();
-        if(gridsolve.equals("O") || gridsolve.equals("o")){
-            Grid newGrid = generateur.getSolver().solveSudoku(grille);
-            if (newGrid != null) {
-            	print("Grille résolu : ");
-                print(grille);
-            }else {
-            	print("Impossible de résoudre la grille");
+            if (difficulty < 1) {
+                difficulty = 1;
+            } else if (difficulty > 3) {
+                difficulty = 3;
             }
-            
-        }
+
+            Grid grille = new Grid(gridLength, gridWidth, blockLength, blockWidth);
+            Generator generateur = new Generator(grille);
+
+            print("Voulez vous entrer une grille ou laisser le programme la créer ?");
+            print("1. Rentrer la grille");
+            print("2. Laisser le programme génerer");
+            int gridChoice = scanner.nextInt();
+            if (gridChoice == 1) {
+                for (int x = 0; x < grille.getWidth(); x++) {
+                    for (int y = 0; y < grille.getHeight(); y++) {
+                        Main.print("x : " + x + "y : " + y);
+                        grille.setElement(x, y, scanner.nextInt());
+                    }
+                }
+            } else {
+                boolean test = generateur.generateNumber();
+                generateur.deleteNumbers(difficulty * (gridLength * gridWidth) / 6);
+            }
+
+            print(grille);
+
+            print("Voulez-vous résoudre la grille ? (O/N)");
+
+            String gridsolve = scanner.next();
+            if (gridsolve.equals("O") || gridsolve.equals("o")) {
+                Grid newGrid = generateur.getSolver().solveSudoku(grille);
+                if (newGrid != null) {
+                    print("Grille résolu : ");
+                    print(grille);
+                } else {
+                    print("Impossible de résoudre la grille");
+                }
+            }
 
         } else if (gameChoice == 2) {
             print("Choisissez la forme du Multidoku / Sudoku Speciaux :");
@@ -125,10 +133,9 @@ public class Main {
 
             switch (multidokuChoice) {
                 case 1:
-                    
                     System.out.println("Sélectionnez le type de Multidoku Classique:\n1. Multidoku en X\n2. Multidoku en +");
                     int classicType = scanner.nextInt();
-        
+
                     if (classicType == 1) {
                         print("Lancement du Multidoku en forme de x en mode textuel...");
                         MultiDoku multiDoku = new MultiDoku("croix");
@@ -144,36 +151,34 @@ public class Main {
                         scanner.close();
                         return;
                     }
-
                     break;
                 case 2:
                     print("Lancement du Multidoku coloré en mode textuel...");
-                     setValues();
-                     ColorGrid grille = new ColorGrid(gridLength, gridWidth, blockLength, blockWidth);
+                    setValues();
+                    ColorGrid grille = new ColorGrid(gridLength, gridWidth, blockLength, blockWidth);
 
-        ColorGenerator generateur = new ColorGenerator(grille);
-        boolean test = generateur.generateNumber();
+                    ColorGenerator generateur = new ColorGenerator(grille);
+                    boolean test = generateur.generateNumber();
 
-        if (test) {
-            grille.assignColors();
+                    if (test) {
+                        grille.assignColors();
+                        generateur.deleteNumbers(2 * (gridLength * gridWidth) / 6);
 
-            generateur.deleteNumbers(2 *(gridLength * gridWidth) / 6);
+                        print("Grille générée:");
+                        print(grille);
 
-            print("Grille générée:");
-            print(grille);
+                        ColorSolver solver = new ColorSolver();
+                        Grid solvedGrid = solver.solveSudoku(grille);
 
-            ColorSolver solver = new ColorSolver();
-            Grid solvedGrid = solver.solveSudoku(grille);
-
-            if (solvedGrid != null) {
-                print("Grille résolue:");
-                print(solvedGrid);
-            } else {
-                print("La grille n'est pas solvable.");
-            }
-        } else {
-            print("Échec de la génération de la grille de Sudoku colorée.");
-        }
+                        if (solvedGrid != null) {
+                            print("Grille résolue:");
+                            print(solvedGrid);
+                        } else {
+                            print("La grille n'est pas solvable.");
+                        }
+                    } else {
+                        print("Échec de la génération de la grille de Sudoku colorée.");
+                    }
                     break;
                 case 3:
                     print("Lancement du Multidoku formé avec des blocs irréguliers en mode textuel...");
@@ -188,7 +193,10 @@ public class Main {
         }
     }
 
-    public static void setValues(){
+    /**
+     * Définit les valeurs de la grille et des blocs en demandant à l'utilisateur de les entrer.
+     */
+    public static void setValues() {
         print("Entrez la longueur de la grille:");
         gridLength = scanner.nextInt();
 
@@ -201,9 +209,12 @@ public class Main {
         print("Entrez la largeur des blocs:");
         blockWidth = scanner.nextInt();
     }
-    
+
+    /**
+     * Affiche un objet dans la console.
+     * @param o L'objet à afficher.
+     */
     public static void print(Object o) {
-    	System.out.println(o);
+        System.out.println(o);
     }
 }
-    
