@@ -71,12 +71,13 @@ public class Solver {
         int size = grid.getWidth();
         for (int num = 1; num <= size; num++) {
             if (grid.isValid(x, y, num)) {
+            	Main.print("Essai de " + num + " en position (" + x + ", " + y + ")");
                 grid.setElement(x, y, num);
 
                 if (solve(grid, x + 1, y)) {
                     return true;
                 }
-
+                Main.print("Backtracking : retrait de " + num + " en position (" + x + ", " + y + ")");
                 grid.setElement(x, y, 0);
             }
         }

@@ -5,7 +5,11 @@ import com.gmail.darkfireyo.ColorGrid;
 import com.gmail.darkfireyo.ColorSolver;
 import com.gmail.darkfireyo.Generator;
 import com.gmail.darkfireyo.Grid;
+import com.gmail.darkfireyo.Main;
 import com.gmail.darkfireyo.MultiDoku;
+import com.gmail.darkfireyo.RandomGenerator;
+import com.gmail.darkfireyo.RandomGrid;
+import com.gmail.darkfireyo.RandomSolver;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -99,6 +103,28 @@ public class MultidokuController {
         frame.getBlock().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	  RandomGrid grid = new RandomGrid();
+            	  grid.printBlocks();
+                  RandomGenerator generator = new RandomGenerator(grid);
+
+            	if (generator.generateNumber()) {
+                    Main.print("Generation du Sudoku de block:");
+                    Main.print(grid);
+
+                    RandomSolver solver = new RandomSolver();
+
+                    if (solver.isSolvable(grid)) {
+                        Main.print("Est résolvable !");
+                        Grid solvedGrid = solver.solveSudoku(grid);
+                        Main.print("Grille résolu :");
+                        Main.print(solvedGrid);
+                        frame.updateMultidokuPanel(solvedGrid);
+                    } else {
+                        Main.print("Le sudoku n'est pas solvable.");
+                    }
+                } else {
+                    Main.print("Impossible de générer le sudoku.");
+                }
             }
           
         });

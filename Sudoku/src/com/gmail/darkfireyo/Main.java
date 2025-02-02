@@ -126,8 +126,8 @@ public class Main {
         } else if (gameChoice == 2) {
             print("Choisissez la forme du Multidoku / Sudoku Speciaux :");
             print("1. Multidoku en forme de x ou +");
-            print("3. Sudoku coloré");
-            print("4. Sudoku formé avec des blocs irréguliers");
+            print("2. Sudoku coloré");
+            print("3. Sudoku formé avec des blocs irréguliers");
 
             int multidokuChoice = scanner.nextInt();
 
@@ -182,7 +182,31 @@ public class Main {
                     break;
                 case 3:
                     print("Lancement du Multidoku formé avec des blocs irréguliers en mode textuel...");
-                    // Placeholder for textual Multidoku blocs irréguliers implementation
+                    RandomGrid grid = new RandomGrid();
+
+                    print("Blocks Générés :");
+                    grid.printBlocks();
+
+                    RandomGenerator generator = new RandomGenerator(grid);
+
+                    if (generator.generateNumber()) {
+                        print("Generation du Sudoku de block:");
+                        print(grid);
+
+                        RandomSolver solver = new RandomSolver();
+
+                        if (solver.isSolvable(grid)) {
+                            print("Est résolvable !");
+                            Grid solvedGrid = solver.solveSudoku(grid);
+                            print("Grille résolu :");
+                            print(solvedGrid);
+                        } else {
+                            print("Le sudoku n'est pas solvable.");
+                        }
+                    } else {
+                        System.out.println("Impossible de générer le sudoku.");
+                    }
+                    
                     break;
                 default:
                     print("Choix invalide.");

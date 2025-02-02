@@ -1,28 +1,48 @@
 package com.gmail.darkfireyo;
 
-/**
- * La classe Cell représente une seule cellule dans une grille de Sudoku.
- */
+import java.util.Objects;
+
 public class Cell {
     private int val;
-
-    public int getVal() {
-        return val;
-    }
+    private int row;
+    private int col;
 
     public Cell() {
         this.val = 0;
+    }
+
+    public Cell(int row, int col) {
+        this.row = row;
+        this.col = col;
+        this.val = 0;
+    }
+
+    public int getVal() {
+        return val;
     }
 
     public void setVal(int val) {
         this.val = val;
     }
 
-    public int getval() {
-        return val;
+    public int getRow() {
+        return row;
     }
 
-    public void resetVal() {
-        this.val = 0;
+    public int getCol() {
+        return col;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cell cell = (Cell) o;
+        return row == cell.row && col == cell.col;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, col);
     }
 }

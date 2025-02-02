@@ -6,7 +6,7 @@ import java.util.Random;
  * Générateur de grille pour un jeu de type Sudoku.
  */
 public class Generator {
-    private Grid currGrid;
+    protected Grid currGrid;
     private Solver solver;
 
     /**

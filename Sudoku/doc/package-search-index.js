@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.gmail.darkfireyo"},{"l":"com.gmail.darkfireyo.ui"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"Sudoku","l":"com.gmail.darkfireyo"}];updateSearchResults();
