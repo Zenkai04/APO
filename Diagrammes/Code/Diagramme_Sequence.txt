@@ -1,22 +1,29 @@
 @startuml
-actor Joueur
-participant "Partie" as Partie
-participant "Generateur" as Generateur
-participant "Grille" as Grille
-participant "Solveur" as Solveur
+actor Player
+participant "Game" as Partie
+participant "Generator" as Generateur
+participant "Grid" as Grille
+participant "Solver" as Solveur
+participant "GUI" as InterfaceGraphique
 
-Joueur -> Partie : creerNouvellePartie()
+Player -> InterfaceGraphique : startNewGame()
+activate InterfaceGraphique
+
+InterfaceGraphique -> Partie : createNewGame(solver, generator)
 activate Partie
 
-Partie -> Generateur : genererGrilleComplete()
+Partie -> Generateur : generateNewPuzzle(difficulty: "easy", size: "9x9")
 activate Generateur
-Generateur -> Grille : creerGrille()
+Generateur -> Grille : generateCompleteGrid()
+Generateur -> Grille : removeNumbers(difficulty: "easy")
 deactivate Generateur
 
-Partie -> Solveur : resoudreGrilleCourante()
+Partie -> Solveur : solveCurrentGrid()
 activate Solveur
-Solveur -> Grille : resoudre()
+Solveur -> Grille : useDeductionRule()
 deactivate Solveur
 
+InterfaceGraphique -> Partie : displayGrid()
 deactivate Partie
+deactivate InterfaceGraphique
 @enduml
